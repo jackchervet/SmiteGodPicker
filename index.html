@@ -776,17 +776,25 @@
       $(".magical").addClass("active");
     });
     $(".warrior").on("click", function(){
-      $(".magical").addClass("active");
+      $(".physical").addClass("active");
     });
     $(".assassin").on("click", function(){
-      $(".magical").addClass("active");
+      $(".physical").addClass("active");
     });
     $(".hunter").on("click", function(){
-      $(".magical").addClass("active");
+      $(".physical").addClass("active");
     });
 
 
     function picker() {
+      var damageTypes = [];
+      if($(".magical").hasClass("active")) {
+        damageTypes.push("Magical");
+      }
+      if($(".physical").hasClass("active")) {
+        damageTypes.push("Physical");
+      }
+
       var classes = [];
       if($(".mage").hasClass("active")) {
         classes.push("Mage");
@@ -804,34 +812,12 @@
         classes.push("Hunter");
       }
 
-      var damageTypes = [];
-      if($(".magical").hasClass("active")) {
-        damageTypes.push("Magical");
-      }
-      if($(".physical").hasClass("active")) {
-        damageTypes.push("Physical");
-      }
-
       var newArray = JSON.parse(JSON.stringify(gods));
       var i,j,k;
       var classOn = false;
       var damageTypeOn = false;
 
       for(i = 0; i < newArray.length; i++) {
-        for(j = 0; j < classes.length; j++) {
-          if(newArray[i].Class == classes[j]) {
-            classOn = true;
-            break;
-          }
-        }
-        if(!classOn) {
-          newArray.splice(i,1);
-          i--;
-        }
-        else {
-          classOn = false;
-        }
-
         for(k = 0; k < damageTypes.length; k++) {
           if(newArray[i].PowerType == damageTypes[k]) {
             damageTypeOn = true;
@@ -841,9 +827,25 @@
         if(!damageTypeOn) {
           newArray.splice(i,1);
           i--;
+          continue;
         }
         else {
           damageTypeOn = false;
+        }
+
+        for(j = 0; j < classes.length; j++) {
+          if(newArray[i].Class == classes[j]) {
+            classOn = true;
+            break;
+          }
+        }
+        if(!classOn) {
+          newArray.splice(i,1);
+          i--;
+          continue;
+        }
+        else {
+          classOn = false;
         }
       }
 
