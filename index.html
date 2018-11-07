@@ -55,6 +55,11 @@
     </div>
   </div>
   <script>
+    document.addEventListener('click', function(e) {
+      if(document.activeElement.toString() == '[object HTMLButtonElement]'){
+        document.activeElement.blur();
+      }
+    });
     //Init all god data
     var gods = [
       {
