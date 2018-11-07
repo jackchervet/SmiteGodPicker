@@ -8,36 +8,52 @@
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
   <!-- jQuery -->
   <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+
+  <!-- custom css -->
+  <link rel="stylesheet" type="text/css" href="index.css">
+
 </head>
 
 <body>
-  <div class="title">
-    <h1>SMITE God Picker</h1>
-    <h5>This simple app helps you choose a god in SMITE</h5>
-  </div>
-  <div class="god-list">
-    <div class="filter-buttons">
+  <div class="container">
+    <div class="row">
+      <div class="title col">
+        <h1>SMITE God Picker</h1>
+        <h5>This simple app helps you choose a god in SMITE</h5>
+      </div>
+    </div>
+    <div class="row">
       <!-- Class -->
-      <button class="mage btn btn-sm btn-outline-primary" data-toggle="button" aria-pressed="false" autocomplete="off">Mage</button>
-      <button class="guardian btn btn-sm btn-outline-success" data-toggle="button" aria-pressed="false" autocomplete="off">Guardian</button>
-      <button class="warrior btn btn-sm btn-outline-danger" data-toggle="button" aria-pressed="false" autocomplete="off">Warrior</button>
-      <button class="assassin btn btn-sm btn-outline-warning" data-toggle="button" aria-pressed="false" autocomplete="off">Assassin</button>
-      <button class="hunter btn btn-sm btn-outline-danger" data-toggle="button" aria-pressed="false" autocomplete="off">Hunter</button>
-
-      <!-- Role -->
-      <!-- Go! -->
-      <button onclick="picker()" type="button" class="btn btn-light picker">Pick</button>
-      <div class="results">
+      <div class="class-buttons col">
+        <button class="mage btn btn-sm btn-outline-primary active" data-toggle="button" aria-pressed="false" autocomplete="off">Mage</button>
+        <button class="guardian btn btn-sm btn-outline-success active" data-toggle="button" aria-pressed="false" autocomplete="off">Guardian</button>
+        <button class="warrior btn btn-sm btn-outline-danger active" data-toggle="button" aria-pressed="false" autocomplete="off">Warrior</button>
+        <button class="assassin btn btn-sm btn-outline-warning active" data-toggle="button" aria-pressed="false" autocomplete="off">Assassin</button>
+        <button class="hunter btn btn-sm btn-outline-danger active" data-toggle="button" aria-pressed="false" autocomplete="off">Hunter</button>
+      </div>
+    </div>
+    <div class="row">
+      <!-- Damage Type -->
+      <div class="damage-type-buttons col">
+        <button class="magical btn btn-sm btn-outline-primary active" data-toggle="button" aria-pressed="false" autocomplete="off">Magical</button>
+        <button class="physical btn btn-sm btn-outline-danger active" data-toggle="button" aria-pressed="false" autocomplete="off">Physical</button>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col">
+        <!-- Go! -->
+        <button onclick="picker()" type="button" class="btn btn-light picker">Pick</button>
+      </div>
+    </div>
+    <div class="row">
+      <div class="results col">
         <h3>You should play: </h3>
         <div id="answer"></div>
       </div>
-
-
     </div>
   </div>
-
   <script>
     //Init all god data
     var gods = [
@@ -729,33 +745,77 @@
       }
     ];
 
+    $(".magical").on("click", function(){
+      if($(".magical").hasClass("active")) {
+        $(".mage").removeClass("active");
+        $(".guardian").removeClass("active");
+      }
+      else {
+        $(".mage").addClass("active");
+        $(".guardian").addClass("active");
+      }
+    });
+
+    $(".physical").on("click", function(){
+      if($(".physical").hasClass("active")) {
+        $(".warrior").removeClass("active");
+        $(".assassin").removeClass("active");
+        $(".hunter").removeClass("active");
+      }
+      else {
+        $(".warrior").addClass("active");
+        $(".assassin").addClass("active");
+        $(".hunter").addClass("active");
+      }
+    });
+
+    $(".mage").on("click", function(){
+      $(".magical").addClass("active");
+    });
+    $(".guardian").on("click", function(){
+      $(".magical").addClass("active");
+    });
+    $(".warrior").on("click", function(){
+      $(".magical").addClass("active");
+    });
+    $(".assassin").on("click", function(){
+      $(".magical").addClass("active");
+    });
+    $(".hunter").on("click", function(){
+      $(".magical").addClass("active");
+    });
+
+
     function picker() {
       var classes = [];
       if($(".mage").hasClass("active")) {
-        //alert("Mage");
         classes.push("Mage");
       }
       if($(".guardian").hasClass("active")) {
-        //alert("Guardian");
         classes.push("Guardian");
       }
       if($(".warrior").hasClass("active")) {
-        //alert("Warrior");
         classes.push("Warrior");
       }
       if($(".assassin").hasClass("active")) {
-        //alert("Assassin");
         classes.push("Assassin");
       }
       if($(".hunter").hasClass("active")) {
-        //alert("Hunter");
         classes.push("Hunter");
       }
 
+      var damageTypes = [];
+      if($(".magical").hasClass("active")) {
+        damageTypes.push("Magical");
+      }
+      if($(".physical").hasClass("active")) {
+        damageTypes.push("Physical");
+      }
+
       var newArray = JSON.parse(JSON.stringify(gods));
-      var i;
-      var j;
+      var i,j,k;
       var classOn = false;
+      var damageTypeOn = false;
 
       for(i = 0; i < newArray.length; i++) {
         for(j = 0; j < classes.length; j++) {
@@ -764,14 +824,26 @@
             break;
           }
         }
-        //alert(classOn);
         if(!classOn) {
-          //alert("splice");
           newArray.splice(i,1);
           i--;
         }
         else {
           classOn = false;
+        }
+
+        for(k = 0; k < damageTypes.length; k++) {
+          if(newArray[i].PowerType == damageTypes[k]) {
+            damageTypeOn = true;
+            break;
+          }
+        }
+        if(!damageTypeOn) {
+          newArray.splice(i,1);
+          i--;
+        }
+        else {
+          damageTypeOn = false;
         }
       }
 
