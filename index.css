@@ -6,3 +6,11 @@
 .btn:hover {
   box-shadow: none;
 }
+
+#god1-result {
+	color: #3399ff;
+}
+
+#god2-result {
+	color: #3399ff;
+}

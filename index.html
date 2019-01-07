@@ -11,1107 +11,146 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
 
+  <script type="text/javascript" src="godsData.js"></script>
+  <script type="text/javascript" src="matchupData.js"></script>
+
+  <script type="text/javascript" src="gods.js"></script>
+  <script type="text/javascript" src="matchup.js"></script>
+
   <!-- custom css -->
   <link rel="stylesheet" type="text/css" href="index.css">
 
 </head>
-
 <body>
   <div class="container">
-    <div class="row">
-      <div class="title col">
-        <h1>SMITE God Picker</h1>
-        <h5>This simple app helps you choose a god in SMITE</h5>
+    <ul class="nav nav-tabs" id="myTab" role="tablist">
+      <li class="nav-item">
+        <a class="nav-link active" id="gods-tab" data-toggle="tab" href="#gods" role="tab" aria-controls="gods" aria-selected="true">God Picker</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" id="matchup-tab" data-toggle="tab" href="#matchup" role="tab" aria-controls="matchup" aria-selected="false">Matchup Checker</a>
+      </li>
+    </ul>
+    <div class="tab-content" id="myTabContent">
+      <div class="tab-pane fade show active" id="gods" role="tabpanel" aria-labelledby="gods-tab">
+        <div class="container">
+          <div class="row">
+            <div class="title col">
+              <h1>SMITE God Picker</h1>
+              <h5>This simple app helps you choose a god in SMITE</h5>
+            </div>
+          </div>
+          <div class="row">
+            <!-- Class -->
+            <div class="class-buttons col">
+              <button class="mage btn btn-sm btn-outline-primary active" data-toggle="button" aria-pressed="false" autocomplete="off">Mage</button>
+              <button class="guardian btn btn-sm btn-outline-success active" data-toggle="button" aria-pressed="false" autocomplete="off">Guardian</button>
+              <button class="warrior btn btn-sm btn-outline-danger active" data-toggle="button" aria-pressed="false" autocomplete="off">Warrior</button>
+              <button class="assassin btn btn-sm btn-outline-warning active" data-toggle="button" aria-pressed="false" autocomplete="off">Assassin</button>
+              <button class="hunter btn btn-sm btn-outline-danger active" data-toggle="button" aria-pressed="false" autocomplete="off">Hunter</button>
+            </div>
+          </div>
+          <div class="row">
+            <!-- Damage Type -->
+            <div class="damage-type-buttons col">
+              <button class="magical btn btn-sm btn-outline-primary active" data-toggle="button" aria-pressed="false" autocomplete="off">Magical</button>
+              <button class="physical btn btn-sm btn-outline-danger active" data-toggle="button" aria-pressed="false" autocomplete="off">Physical</button>
+            </div>
+          </div>
+          <div class="row">
+            <div class="player-buttons col">
+              <button class="all-players btn btn-sm btn-outline-primary active" data-toggle="button" aria-pressed="true" autocomplete="off">All</button>
+              <button class="Gio btn btn-sm btn-outline-success active" data-toggle="button" aria-pressed="true" autocomplete="off">Gio</button>
+              <button class="Tarik btn btn-sm btn-outline-success active" data-toggle="button" aria-pressed="true" autocomplete="off">Tarik</button>
+              <button class="Z btn btn-sm btn-outline-success active" data-toggle="button" aria-pressed="true" autocomplete="off">Z</button>
+          </div>
+          </div>
+          <div class="row">
+            <div class="col">
+              <!-- Go! -->
+              <button onclick="picker()" type="button" class="btn btn-light picker">Pick</button>
+            </div>
+          </div>
+          <div class="row">
+            <div class="results col">
+              <h3>You should play: </h3>
+              <div id="answer"></div>
+            </div>
+          </div>
+        </div>
       </div>
-    </div>
-    <div class="row">
-      <!-- Class -->
-      <div class="class-buttons col">
-        <button class="mage btn btn-sm btn-outline-primary active" data-toggle="button" aria-pressed="false" autocomplete="off">Mage</button>
-        <button class="guardian btn btn-sm btn-outline-success active" data-toggle="button" aria-pressed="false" autocomplete="off">Guardian</button>
-        <button class="warrior btn btn-sm btn-outline-danger active" data-toggle="button" aria-pressed="false" autocomplete="off">Warrior</button>
-        <button class="assassin btn btn-sm btn-outline-warning active" data-toggle="button" aria-pressed="false" autocomplete="off">Assassin</button>
-        <button class="hunter btn btn-sm btn-outline-danger active" data-toggle="button" aria-pressed="false" autocomplete="off">Hunter</button>
-      </div>
-    </div>
-    <div class="row">
-      <!-- Damage Type -->
-      <div class="damage-type-buttons col">
-        <button class="magical btn btn-sm btn-outline-primary active" data-toggle="button" aria-pressed="false" autocomplete="off">Magical</button>
-        <button class="physical btn btn-sm btn-outline-danger active" data-toggle="button" aria-pressed="false" autocomplete="off">Physical</button>
-      </div>
-    </div>
-    <div class="row">
-      <div class="player-buttons col">
-        <button class="all-players btn btn-sm btn-outline-primary active" data-toggle="button" aria-pressed="true" autocomplete="off">All</button>
-        <button class="Gio btn btn-sm btn-outline-success active" data-toggle="button" aria-pressed="true" autocomplete="off">Gio</button>
-        <button class="Tarik btn btn-sm btn-outline-success active" data-toggle="button" aria-pressed="true" autocomplete="off">Tarik</button>
-        <button class="Z btn btn-sm btn-outline-success active" data-toggle="button" aria-pressed="true" autocomplete="off">Z</button>
-    </div>
-    </div>
-    <div class="row">
-      <div class="col">
-        <!-- Go! -->
-        <button onclick="picker()" type="button" class="btn btn-light picker">Pick</button>
-      </div>
-    </div>
-    <div class="row">
-      <div class="results col">
-        <h3>You should play: </h3>
-        <div id="answer"></div>
+      <div class="tab-pane fade" id="matchup" role="tabpanel" aria-labelledby="matchup-tab">
+        <div class="container">
+          <div class="row">
+            <div class="title col">
+              <h1>SMITE Matchup Checker</h1>
+              <h5>Check which dash matchups beat which</h5>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col god1">
+              <form>
+                <div class="form-group">
+                  <label for="god1-select">Choose First God Move</label>
+                  <select class="form-control" id="god1-select">
+                    <option>Ganesha 3</option>
+                    <option>Geb 1</option>
+                    <option>Geb 1 (CC immune)</option>
+                    <option>Khepri 1</option>
+                    <option>Kumbakharna 1</option>
+                    <option>Kumbakharna 4</option>
+                    <option>Kuzenbo 3</option>
+                    <option>Sobek 1</option>
+                    <option>Sobek 2</option>
+                    <option>Amaterasu 3</option>
+                    <option>Cu Chulainn 3 (rage)</option>
+                    <option>Erlang 3 (turtle)</option>
+                    <option>Hercules 1</option>
+                    <option>Sun Wukong 3 (tiger)</option>
+                    <option>Sun Wukong 3 (bull)</option>
+                    <option>Tyr 1 (damage stance)</option>
+                    <option>Vamana 1</option>
+                    <option>Mercury 3</option>
+                    <option>Ne Zha 4</option>
+                    <option>Apollo 3</option>
+                    <option>Chiron 3</option>
+                  </select>
+                  <div id="god1-result"></div>
+                </div>
+                <div class="form-group">
+                  <label for="god1-select">Choose Second God Move</label>
+                  <select class="form-control" id="god2-select">
+                    <option>Ganesha 3</option>
+                    <option>Geb 1</option>
+                    <option>Geb 1 (CC immune)</option>
+                    <option>Khepri 1</option>
+                    <option>Kumbakharna 1</option>
+                    <option>Kumbakharna 4</option>
+                    <option>Kuzenbo 3</option>
+                    <option>Sobek 1</option>
+                    <option>Sobek 2</option>
+                    <option>Amaterasu 3</option>
+                    <option>Cu Chulainn 3 (rage)</option>
+                    <option>Erlang 3 (turtle)</option>
+                    <option>Hercules 1</option>
+                    <option>Sun Wukong 3 (tiger)</option>
+                    <option>Sun Wukong 3 (bull)</option>
+                    <option>Tyr 1 (damage stance)</option>
+                    <option>Vamana 1</option>
+                    <option>Mercury 3</option>
+                    <option>Ne Zha 4</option>
+                    <option>Apollo 3</option>
+                    <option>Chiron 3</option>
+                  </select>
+                  <div id="god2-result"></div>
+                </div>
+                <button type="button" onclick="matchups()" class="btn btn-primary">Go</button>
+              </form>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
-  <script>
-    document.addEventListener('click', function(e) {
-      if(document.activeElement.toString() == '[object HTMLButtonElement]'){
-        document.activeElement.blur();
-      }
-    });
-    //Init all god data
-    var gods = [
-      {
-        "name": "Achilles",
-        "Pantheon": "Greek",
-        "AttackType": "Melee",
-        "PowerType": "Physical",
-        "Class": "Warrior",
-        "player": [
-          "Gio"
-        ]
-      },
-      {
-        "name": "Agni",
-        "Pantheon": "Hindu",
-        "AttackType": "Ranged",
-        "PowerType": "Magical",
-        "Class": "Mage",
-        "player": [
-          "Gio"
-        ]
-      },
-      {
-        "name": "Ah Muzen Cab",
-        "Pantheon": "Mayan",
-        "AttackType": "Ranged",
-        "PowerType": "Physical",
-        "Class": "Hunter",
-        "player": []
-      },
-      {
-        "name": "Ah Puch",
-        "Pantheon": "Mayan",
-        "AttackType": "Ranged",
-        "PowerType": "Magical",
-        "Class": "Mage",
-        "player": []
-      },
-      {
-        "name": "Amaterasu",
-        "Pantheon": "Japanese",
-        "AttackType": "Melee",
-        "PowerType": "Physical",
-        "Class": "Warrior",
-        "player": []
-      },
-      {
-        "name": "Anhur",
-        "Pantheon": "Egyptian",
-        "AttackType": "Ranged",
-        "PowerType": "Physical",
-        "Class": "Hunter",
-        "player": []
-      },
-      {
-        "name": "Anubis",
-        "Pantheon": "Egyptian",
-        "AttackType": "Ranged",
-        "PowerType": "Magical",
-        "Class": "Mage",
-        "player": [
-          "Gio"
-        ]
-      },
-      {
-        "name": "Ao Kuang",
-        "Pantheon": "Chinese",
-        "AttackType": "Melee",
-        "PowerType": "Magical",
-        "Class": "Mage",
-        "player": []
-      },
-      {
-        "name": "Aphrodite",
-        "Pantheon": "Greek",
-        "AttackType": "Ranged",
-        "PowerType": "Magical",
-        "Class": "Mage",
-        "player": []
-      },
-      {
-        "name": "Apollo",
-        "Pantheon": "Greek",
-        "AttackType": "Ranged",
-        "PowerType": "Physical",
-        "Class": "Hunter",
-        "player": []
-      },
-      {
-        "name": "Arachne",
-        "Pantheon": "Greek",
-        "AttackType": "Melee",
-        "PowerType": "Physical",
-        "Class": "Assassin",
-        "player": []
-      },
-      {
-        "name": "Ares",
-        "Pantheon": "Greek",
-        "AttackType": "Melee",
-        "PowerType": "Magical",
-        "Class": "Guardian",
-        "player": [
-          "Z"
-        ]
-      },
-      {
-        "name": "Artemis",
-        "Pantheon": "Greek",
-        "AttackType": "Ranged",
-        "PowerType": "Physical",
-        "Class": "Hunter",
-        "player": []
-      },
-      {
-        "name": "Artio",
-        "Pantheon": "Celtic",
-        "AttackType": "Melee",
-        "PowerType": "Magical",
-        "Class": "Guardian",
-        "player": []
-      },
-      {
-        "name": "Athena",
-        "Pantheon": "Greek",
-        "AttackType": "Melee",
-        "PowerType": "Magical",
-        "Class": "Guardian",
-        "player": []
-      },
-      {
-        "name": "Awilix",
-        "Pantheon": "Mayan",
-        "AttackType": "Melee",
-        "PowerType": "Physical",
-        "Class": "Assassin",
-        "player": []
-      },
-      {
-        "name": "Bacchus",
-        "Pantheon": "Roman",
-        "AttackType": "Melee",
-        "PowerType": "Magical",
-        "Class": "Guardian",
-        "player": [
-          "Z"
-        ]
-      },
-      {
-        "name": "Bakasura",
-        "Pantheon": "Hindu",
-        "AttackType": "Melee",
-        "PowerType": "Physical",
-        "Class": "Assassin",
-        "player": []
-      },
-      {
-        "name": "Baron Samedi",
-        "Pantheon": "Voodoo",
-        "AttackType": "Ranged",
-        "PowerType": "Magical",
-        "Class": "Mage",
-        "player": [
-          "Gio"
-        ]
-      },
-      {
-        "name": "Bastet",
-        "Pantheon": "Egyptian",
-        "AttackType": "Melee",
-        "PowerType": "Physical",
-        "Class": "Assassin",
-        "player": []
-      },
-      {
-        "name": "Bellona",
-        "Pantheon": "Roman",
-        "AttackType": "Melee",
-        "PowerType": "Physical",
-        "Class": "Warrior",
-        "player": [
-          "Z",
-          "Gio"
-        ]
-      },
-      {
-        "name": "Cabrakan",
-        "Pantheon": "Mayan",
-        "AttackType": "Melee",
-        "PowerType": "Magical",
-        "Class": "Guardian",
-        "player": []
-      },
-      {
-        "name": "Camazotz",
-        "Pantheon": "Mayan",
-        "AttackType": "Melee",
-        "PowerType": "Physical",
-        "Class": "Assassin",
-        "player": []
-      },
-      {
-        "name": "Cerberus",
-        "Pantheon": "Greek",
-        "AttackType": "Melee",
-        "PowerType": "Magical",
-        "Class": "Guardian",
-        "player": [
-          "Z",
-          "Gio",
-          "Tarik"
-        ]
-      },
-      {
-        "name": "Cernunnos",
-        "Pantheon": "Celtic",
-        "AttackType": "Ranged",
-        "PowerType": "Physical",
-        "Class": "Hunter",
-        "player": [
-          "Tarik"
-        ]
-      },
-      {
-        "name": "Chaac",
-        "Pantheon": "Mayan",
-        "AttackType": "Melee",
-        "PowerType": "Physical",
-        "Class": "Warrior",
-        "player": [
-          "Z",
-          "Gio"
-        ]
-      },
-      {
-        "name": "Chang'e",
-        "Pantheon": "Chinese",
-        "AttackType": "Ranged",
-        "PowerType": "Magical",
-        "Class": "Mage",
-        "player": [
-          "Gio"
-        ]
-      },
-      {
-        "name": "Chernobog",
-        "Pantheon": "Slavic",
-        "AttackType": "Ranged",
-        "PowerType": "Physical",
-        "Class": "Hunter",
-        "player": []
-      },
-      {
-        "name": "Chiron",
-        "Pantheon": "Greek",
-        "AttackType": "Ranged",
-        "PowerType": "Physical",
-        "Class": "Hunter",
-        "player": [
-          "Tarik"
-        ]
-      },
-      {
-        "name": "Chronos",
-        "Pantheon": "Greek",
-        "AttackType": "Ranged",
-        "PowerType": "Magical",
-        "Class": "Mage",
-        "player": [
-          "Z"
-        ]
-      },
-      {
-        "name": "Cu Chulainn",
-        "Pantheon": "Celtic",
-        "AttackType": "Melee",
-        "PowerType": "Physical",
-        "Class": "Warrior",
-        "player": []
-      },
-      {
-        "name": "Cupid",
-        "Pantheon": "Roman",
-        "AttackType": "Ranged",
-        "PowerType": "Physical",
-        "Class": "Hunter",
-        "player": [
-          "Z",
-          "Gio"
-        ]
-      },
-      {
-        "name": "Da Ji",
-        "Pantheon": "Chinese",
-        "AttackType": "Melee",
-        "PowerType": "Physical",
-        "Class": "Assassin",
-        "player": []
-      },
-      {
-        "name": "Discordia",
-        "Pantheon": "Roman",
-        "AttackType": "Ranged",
-        "PowerType": "Magical",
-        "Class": "Mage",
-        "player": [
-          "Gio"
-        ]
-      },
-      {
-        "name": "Erlang Shen",
-        "Pantheon": "Chinese",
-        "AttackType": "Melee",
-        "PowerType": "Physical",
-        "Class": "Warrior",
-        "player": []
-      },
-      {
-        "name": "Fafnir",
-        "Pantheon": "Norse",
-        "AttackType": "Melee",
-        "PowerType": "Magical",
-        "Class": "Guardian",
-        "player": []
-      },
-      {
-        "name": "Fenrir",
-        "Pantheon": "Norse",
-        "AttackType": "Melee",
-        "PowerType": "Physical",
-        "Class": "Assassin",
-        "player": [
-          "Tarik"
-        ]
-      },
-      {
-        "name": "Freya",
-        "Pantheon": "Norse",
-        "AttackType": "Melee",
-        "PowerType": "Magical",
-        "Class": "Mage",
-        "player": [
-          "Z"
-        ]
-      },
-      {
-        "name": "Ganesha",
-        "Pantheon": "Hindu",
-        "AttackType": "Melee",
-        "PowerType": "Magical",
-        "Class": "Guardian",
-        "player": []
-      },
-      {
-        "name": "Geb",
-        "Pantheon": "Egyptian",
-        "AttackType": "Melee",
-        "PowerType": "Magical",
-        "Class": "Guardian",
-        "player": [
-          "Tarik"
-        ]
-      },
-      {
-        "name": "Guan Yu",
-        "Pantheon": "Chinese",
-        "AttackType": "Melee",
-        "PowerType": "Physical",
-        "Class": "Warrior",
-        "player": []
-      },
-      {
-        "name": "Hachiman",
-        "Pantheon": "Japanese",
-        "AttackType": "Ranged",
-        "PowerType": "Physical",
-        "Class": "Hunter",
-        "player": []
-      },
-      {
-        "name": "Hades",
-        "Pantheon": "Greek",
-        "AttackType": "Ranged",
-        "PowerType": "Magical",
-        "Class": "Mage",
-        "player": [
-          "Tarik"
-        ]
-      },
-      {
-        "name": "He Bo",
-        "Pantheon": "Chinese",
-        "AttackType": "Ranged",
-        "PowerType": "Magical",
-        "Class": "Mage",
-        "player": [
-          "Z"
-        ]
-      },
-      {
-        "name": "Hel",
-        "Pantheon": "Norse",
-        "AttackType": "Ranged",
-        "PowerType": "Magical",
-        "Class": "Mage",
-        "player": []
-      },
-      {
-        "name": "Hera",
-        "Pantheon": "Greek",
-        "AttackType": "Ranged",
-        "PowerType": "Magical",
-        "Class": "Mage",
-        "player": []
-      },
-      {
-        "name": "Hercules",
-        "Pantheon": "Roman",
-        "AttackType": "Melee",
-        "PowerType": "Physical",
-        "Class": "Warrior",
-        "player": [
-          "Z",
-          "Gio"
-        ]
-      },
-      {
-        "name": "Hou Yi",
-        "Pantheon": "Chinese",
-        "AttackType": "Ranged",
-        "PowerType": "Physical",
-        "Class": "Hunter",
-        "player": [
-          "Tarik"
-        ]
-      },
-      {
-        "name": "Hun Batz",
-        "Pantheon": "Mayan",
-        "AttackType": "Melee",
-        "PowerType": "Physical",
-        "Class": "Assassin",
-        "player": []
-      },
-      {
-        "name": "Isis",
-        "Pantheon": "Egyptian",
-        "AttackType": "Ranged",
-        "PowerType": "Magical",
-        "Class": "Mage",
-        "player": []
-      },
-      {
-        "name": "Izanami",
-        "Pantheon": "Japanese",
-        "AttackType": "Ranged",
-        "PowerType": "Physical",
-        "Class": "Hunter",
-        "player": []
-      },
-      {
-        "name": "Janus",
-        "Pantheon": "Roman",
-        "AttackType": "Ranged",
-        "PowerType": "Magical",
-        "Class": "Mage",
-        "player": [
-          "Tarik"
-        ]
-      },
-      {
-        "name": "Jing Wei",
-        "Pantheon": "Chinese",
-        "AttackType": "Ranged",
-        "PowerType": "Physical",
-        "Class": "Hunter",
-        "player": []
-      },
-      {
-        "name": "Kali",
-        "Pantheon": "Hindu",
-        "AttackType": "Melee",
-        "PowerType": "Physical",
-        "Class": "Assassin",
-        "player": []
-      },
-      {
-        "name": "Khepri",
-        "Pantheon": "Egyptian",
-        "AttackType": "Melee",
-        "PowerType": "Magical",
-        "Class": "Guardian",
-        "player": []
-      },
-      {
-        "name": "Kukulkan",
-        "Pantheon": "Mayan",
-        "AttackType": "Ranged",
-        "PowerType": "Magical",
-        "Class": "Mage",
-        "player": [
-          "Gio",
-          "Tarik"
-        ]
-      },
-      {
-        "name": "Kumbhakarna",
-        "Pantheon": "Hindu",
-        "AttackType": "Melee",
-        "PowerType": "Magical",
-        "Class": "Guardian",
-        "player": [
-          "Z"
-        ]
-      },
-      {
-        "name": "Kuzenbo",
-        "Pantheon": "Japanese",
-        "AttackType": "Melee",
-        "PowerType": "Magical",
-        "Class": "Guardian",
-        "player": [
-          "Z"
-        ]
-      },
-      {
-        "name": "Loki",
-        "Pantheon": "Norse",
-        "AttackType": "Melee",
-        "PowerType": "Physical",
-        "Class": "Assassin",
-        "player": []
-      },
-      {
-        "name": "Medusa",
-        "Pantheon": "Greek",
-        "AttackType": "Ranged",
-        "PowerType": "Physical",
-        "Class": "Hunter",
-        "player": [
-          "Tarik"
-        ]
-      },
-      {
-        "name": "Mercury",
-        "Pantheon": "Roman",
-        "AttackType": "Melee",
-        "PowerType": "Physical",
-        "Class": "Assassin",
-        "player": []
-      },
-      {
-        "name": "Ne Zha",
-        "Pantheon": "Chinese",
-        "AttackType": "Melee",
-        "PowerType": "Physical",
-        "Class": "Assassin",
-        "player": []
-      },
-      {
-        "name": "Neith",
-        "Pantheon": "Egyptian",
-        "AttackType": "Ranged",
-        "PowerType": "Physical",
-        "Class": "Hunter",
-        "player": [
-          "Gio"
-        ]
-      },
-      {
-        "name": "Nemesis",
-        "Pantheon": "Greek",
-        "AttackType": "Melee",
-        "PowerType": "Physical",
-        "Class": "Assassin",
-        "player": []
-      },
-      {
-        "name": "Nike",
-        "Pantheon": "Greek",
-        "AttackType": "Melee",
-        "PowerType": "Physical",
-        "Class": "Warrior",
-        "player": []
-      },
-      {
-        "name": "Nox",
-        "Pantheon": "Roman",
-        "AttackType": "Ranged",
-        "PowerType": "Magical",
-        "Class": "Mage",
-        "player": []
-      },
-      {
-        "name": "Nu Wa",
-        "Pantheon": "Chinese",
-        "AttackType": "Ranged",
-        "PowerType": "Magical",
-        "Class": "Mage",
-        "player": []
-      },
-      {
-        "name": "Odin",
-        "Pantheon": "Norse",
-        "AttackType": "Melee",
-        "PowerType": "Physical",
-        "Class": "Warrior",
-        "player": [
-          "Z",
-          "Tarik"
-        ]
-      },
-      {
-        "name": "Osiris",
-        "Pantheon": "Egyptian",
-        "AttackType": "Melee",
-        "PowerType": "Physical",
-        "Class": "Warrior",
-        "player": [
-          "Tarik"
-        ]
-      },
-      {
-        "name": "Pele",
-        "Pantheon": "Polynesian",
-        "AttackType": "Melee",
-        "PowerType": "Physical",
-        "Class": "Assassin",
-        "player": []
-      },
-      {
-        "name": "Poseidon",
-        "Pantheon": "Greek",
-        "AttackType": "Ranged",
-        "PowerType": "Magical",
-        "Class": "Mage",
-        "player": [
-          "Tarik"
-        ]
-      },
-      {
-        "name": "Ra",
-        "Pantheon": "Egyptian",
-        "AttackType": "Ranged",
-        "PowerType": "Magical",
-        "Class": "Mage",
-        "player": [
-          "Z"
-        ]
-      },
-      {
-        "name": "Raijin",
-        "Pantheon": "Japanese",
-        "AttackType": "Ranged",
-        "PowerType": "Magical",
-        "Class": "Mage",
-        "player": []
-      },
-      {
-        "name": "Rama",
-        "Pantheon": "Hindu",
-        "AttackType": "Ranged",
-        "PowerType": "Physical",
-        "Class": "Hunter",
-        "player": []
-      },
-      {
-        "name": "Ratatoskr",
-        "Pantheon": "Norse",
-        "AttackType": "Melee",
-        "PowerType": "Physical",
-        "Class": "Assassin",
-        "player": []
-      },
-      {
-        "name": "Ravana",
-        "Pantheon": "Hindu",
-        "AttackType": "Melee",
-        "PowerType": "Physical",
-        "Class": "Assassin",
-        "player": [
-          "Z",
-          "Gio"
-        ]
-      },
-      {
-        "name": "Scylla",
-        "Pantheon": "Greek",
-        "AttackType": "Ranged",
-        "PowerType": "Magical",
-        "Class": "Mage",
-        "player": [
-          "Gio"
-        ]
-      },
-      {
-        "name": "Serqet",
-        "Pantheon": "Egyptian",
-        "AttackType": "Melee",
-        "PowerType": "Physical",
-        "Class": "Assassin",
-        "player": []
-      },
-      {
-        "name": "Skadi",
-        "Pantheon": "Norse",
-        "AttackType": "Ranged",
-        "PowerType": "Physical",
-        "Class": "Hunter",
-        "player": [
-          "Gio"
-        ]
-      },
-      {
-        "name": "Sobek",
-        "Pantheon": "Egyptian",
-        "AttackType": "Melee",
-        "PowerType": "Magical",
-        "Class": "Guardian",
-        "player": [
-          "Gio"
-        ]
-      },
-      {
-        "name": "Sol",
-        "Pantheon": "Norse",
-        "AttackType": "Ranged",
-        "PowerType": "Magical",
-        "Class": "Mage",
-        "player": [
-          "Tarik"
-        ]
-      },
-      {
-        "name": "Sun Wukong",
-        "Pantheon": "Chinese",
-        "AttackType": "Melee",
-        "PowerType": "Physical",
-        "Class": "Warrior",
-        "player": []
-      },
-      {
-        "name": "Susano",
-        "Pantheon": "Japanese",
-        "AttackType": "Melee",
-        "PowerType": "Physical",
-        "Class": "Assassin",
-        "player": []
-      },
-      {
-        "name": "Sylvanus",
-        "Pantheon": "Roman",
-        "AttackType": "Ranged",
-        "PowerType": "Magical",
-        "Class": "Guardian",
-        "player": []
-      },
-      {
-        "name": "Terra",
-        "Pantheon": "Roman",
-        "AttackType": "Melee",
-        "PowerType": "Magical",
-        "Class": "Guardian",
-        "player": []
-      },
-      {
-        "name": "Thanatos",
-        "Pantheon": "Greek",
-        "AttackType": "Melee",
-        "PowerType": "Physical",
-        "Class": "Assassin",
-        "player": []
-      },
-      {
-        "name": "The Morrigan",
-        "Pantheon": "Celtic",
-        "AttackType": "Ranged",
-        "PowerType": "Magical",
-        "Class": "Mage",
-        "player": []
-      },
-      {
-        "name": "Thor",
-        "Pantheon": "Norse",
-        "AttackType": "Melee",
-        "PowerType": "Physical",
-        "Class": "Assassin",
-        "player": [
-          "Tarik"
-        ]
-      },
-      {
-        "name": "Thoth",
-        "Pantheon": "Egyptian",
-        "AttackType": "Ranged",
-        "PowerType": "Magical",
-        "Class": "Mage",
-        "player": []
-      },
-      {
-        "name": "Tyr",
-        "Pantheon": "Norse",
-        "AttackType": "Melee",
-        "PowerType": "Physical",
-        "Class": "Warrior",
-        "player": []
-      },
-      {
-        "name": "Ullr",
-        "Pantheon": "Norse",
-        "AttackType": "Ranged",
-        "PowerType": "Physical",
-        "Class": "Hunter",
-        "player": []
-      },
-      {
-        "name": "Vamana",
-        "Pantheon": "Hindu",
-        "AttackType": "Melee",
-        "PowerType": "Physical",
-        "Class": "Warrior",
-        "player": [
-          "Tarik"
-        ]
-      },
-      {
-        "name": "Vulcan",
-        "Pantheon": "Roman",
-        "AttackType": "Ranged",
-        "PowerType": "Magical",
-        "Class": "Mage",
-        "player": [
-          "Tarik"
-        ]
-      },
-      {
-        "name": "Xbalanque",
-        "Pantheon": "Mayan",
-        "AttackType": "Ranged",
-        "PowerType": "Physical",
-        "Class": "Hunter",
-        "player": []
-      },
-      {
-        "name": "Xing Tian",
-        "Pantheon": "Chinese",
-        "AttackType": "Melee",
-        "PowerType": "Magical",
-        "Class": "Guardian",
-        "player": []
-      },
-      {
-        "name": "Ymir",
-        "Pantheon": "Norse",
-        "AttackType": "Melee",
-        "PowerType": "Magical",
-        "Class": "Guardian",
-        "player": [
-          "Z",
-          "Gio"
-        ]
-      },
-      {
-        "name": "Zeus",
-        "Pantheon": "Greek",
-        "AttackType": "Ranged",
-        "PowerType": "Magical",
-        "Class": "Mage",
-        "player": []
-      },
-      {
-        "name": "Zhong Kui",
-        "Pantheon": "Chinese",
-        "AttackType": "Ranged",
-        "PowerType": "Magical",
-        "Class": "Mage",
-        "player": [
-          "Gio"
-        ]
-      }
-    ];
-
-    $(".magical").on("click", function(){
-      if($(".magical").hasClass("active")) {
-        $(".mage").removeClass("active");
-        $(".guardian").removeClass("active");
-      }
-      else {
-        $(".mage").addClass("active");
-        $(".guardian").addClass("active");
-      }
-    });
-
-    $(".physical").on("click", function(){
-      if($(".physical").hasClass("active")) {
-        $(".warrior").removeClass("active");
-        $(".assassin").removeClass("active");
-        $(".hunter").removeClass("active");
-      }
-      else {
-        $(".warrior").addClass("active");
-        $(".assassin").addClass("active");
-        $(".hunter").addClass("active");
-      }
-    });
-
-    $(".mage").on("click", function(){
-      $(".magical").addClass("active");
-    });
-    $(".guardian").on("click", function(){
-      $(".magical").addClass("active");
-    });
-    $(".warrior").on("click", function(){
-      $(".physical").addClass("active");
-    });
-    $(".assassin").on("click", function(){
-      $(".physical").addClass("active");
-    });
-    $(".hunter").on("click", function(){
-      $(".physical").addClass("active");
-    });
-
-    $(".all-players").on("click", function(){
-      $(".Gio").addClass("active");
-      $(".Tarik").addClass("active");
-      $(".Z").addClass("active");
-    });
-
-    $(".Gio").on("click", function(){
-        $(".all-players").removeClass("active");
-    });
-    $(".Tarik").on("click", function(){
-        $(".all-players").removeClass("active");
-    });
-    $(".Z").on("click", function(){
-        $(".all-players").removeClass("active");
-    });
-
-    function picker() {
-      var damageTypes = [];
-      if($(".magical").hasClass("active")) {
-        damageTypes.push("Magical");
-      }
-      if($(".physical").hasClass("active")) {
-        damageTypes.push("Physical");
-      }
-
-      var allPlayers = false;
-      if($(".all-players").hasClass("active")){
-        allPlayers = true;
-      }
-      else {
-        var players = [];
-        if($(".Gio").hasClass("active")){
-          players.push("Gio");
-        }
-        if($(".Tarik").hasClass("active")){
-          players.push("Tarik");
-        }
-        if($(".Z").hasClass("active")){
-          players.push("Z");
-        }
-      }
-
-      var classes = [];
-      if($(".mage").hasClass("active")) {
-        classes.push("Mage");
-      }
-      if($(".guardian").hasClass("active")) {
-        classes.push("Guardian");
-      }
-      if($(".warrior").hasClass("active")) {
-        classes.push("Warrior");
-      }
-      if($(".assassin").hasClass("active")) {
-        classes.push("Assassin");
-      }
-      if($(".hunter").hasClass("active")) {
-        classes.push("Hunter");
-      }
-
-      var newArray = JSON.parse(JSON.stringify(gods));
-      var i,j,k;
-      var classOn = false;
-      var damageTypeOn = false;
-      var playerFound = false;
-
-      for(i = 0; i < newArray.length; i++) {
-        for(j = 0; j < damageTypes.length; j++) {
-          if(newArray[i].PowerType == damageTypes[j]) {
-            damageTypeOn = true;
-            break;
-          }
-        }
-        if(!damageTypeOn) {
-          newArray.splice(i,1);
-          i--;
-          continue;
-        }
-        else {
-          damageTypeOn = false;
-        }
-
-        if(!allPlayers){
-          for(j = 0; j < players.length; j++) {
-            for(k = 0; k < newArray[i].player.length; k++) {
-              if(newArray[i].player[k] == players[j]) {
-                playerFound = true;
-                break;
-              }
-            }
-            if(playerFound) {
-              break;
-            }
-          }
-          if(!playerFound) {
-            newArray.splice(i,1);
-            i--;
-            continue;
-          }
-          else {
-            playerFound = false;
-          }
-        }
-
-        for(j = 0; j < classes.length; j++) {
-          if(newArray[i].Class == classes[j]) {
-            classOn = true;
-            break;
-          }
-        }
-        if(!classOn) {
-          newArray.splice(i,1);
-          i--;
-          continue;
-        }
-        else {
-          classOn = false;
-        }
-      }
-
-      var index = Math.floor(Math.random()*newArray.length);
-      document.getElementById("answer").innerHTML = newArray[index].name;
-    }
-  </script>
 </body>
 </html>
