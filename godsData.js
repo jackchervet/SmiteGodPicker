@@ -476,6 +476,14 @@ var gods = [
         "player": []
       },
       {
+        "name": "Jormungandr",
+        "Pantheon": "Norse",
+        "AttackType": "Ranged",
+        "PowerType": "Magical",
+        "Class": "Guardian",
+        "player": []
+      },
+      {
         "name": "Kali",
         "Pantheon": "Hindu",
         "AttackType": "Melee",
@@ -489,6 +497,14 @@ var gods = [
         "AttackType": "Melee",
         "PowerType": "Magical",
         "Class": "Guardian",
+        "player": []
+      },
+      {
+        "name": "King Arthur",
+        "Pantheon": "Arthurian",
+        "AttackType": "Melee",
+        "PowerType": "Physical",
+        "Class": "Warrior",
         "player": []
       },
       {
@@ -546,6 +562,14 @@ var gods = [
         "AttackType": "Melee",
         "PowerType": "Physical",
         "Class": "Assassin",
+        "player": []
+      },
+      {
+        "name": "Merlin",
+        "Pantheon": "Arthurian",
+        "AttackType": "Ranged",
+        "PowerType": "Magical",
+        "Class": "Mage",
         "player": []
       },
       {
